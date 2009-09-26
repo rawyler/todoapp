@@ -1,2 +1,6 @@
-* Add root-node-parsing
-* Tab-support
+* Tab-support (indent, child of)
+* internal todo representation
+* direct transformation to internal model
+* export contents of root to taskpaper file
+* export to xml for toodledo
+
