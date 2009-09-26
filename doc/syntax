@@ -1,0 +1,10 @@
+Die Tasks befinden sich inmitten von Freitext. Dieser Freitext enthält auch Information, die nicht an die Taskmanagement-Applikationen weitergeleitet werden sollen. Gleichzeitig werden auf diese Weise ungewollte False-Positives vermieden.
+Daher schlage ich vor, die Syntax von Taskpaper um ein Schlüsselwort zu erweitern.
+
+Beispiele:
+
+{ taskpaper_syntax }
+
+tasks { taskpaper_syntax }
+
+Weitere Möglichkeiten

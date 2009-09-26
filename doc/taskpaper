@@ -1,0 +1,38 @@
+Syntax
+
+A task is a line that begins with a hyphen followed by a space ('- ') which can optionally be prefixed (i.e indented) with tabs or spaces. A task can have zero or more context tags.
+
+A project is a line that isn't a task and ends with a colon (':'), or a colon (':\n') followed by a newline.
+
+A note is any line that doesn't match the task or project rules.
+
+Indentation level (with tabs) defines ownership. For instance if you indent one task under another task then it is considered a subtask. Tasks and notes own all objects that are indented underneath them. Projects are a special case, they own all objects that are indented underneath them, or indented at the same level as them. The exception being other projects, that are indented at the same level as them. See the example TaskPaper file at the end of this page for examples.
+
+A context tag has the form "@tag", i.e. it starts with an "at" character ("@"), followed by a run of non-whitespace characters. A context tag can optionally have a value assigned to it. The value syntax immediately follows the tag word (no whitespace between) and is enclosed by '(' and ')'. The value text inside can have whitespace, but no newlines. Here is an example of a tag with a value:
+
+    @tag(tag's value) 
+
+I also plan on standardizing the syntax for different tag values, but am still working on that. But for instance dates are likely to have the format "yyyy-mm-dd hh:mm".
+
+
+Example File
+
+- this is a task. 
+
+this is a project: 
+
+this is a note that belongs to "this is a project" 
+
+- this task belongs to "this is a project", as do the following tasks at the same level. 
+
+- this tasks has two tags @done @work 
+
+- this task has a tag with a value @priority(1) 
+
+- this task has a tag with a date value @due(2007-11-27) 
+
+- this task has an associated note 
+
+this is another project:
+
+- this note belongs to "this is another project".

@@ -1,0 +1,23 @@
+Variante 1 - Manueller Import bei Toodledo - 2T
+
+- Command-Line Tool
+- Input-Datei
+- Output-Dateien für Toodledo und Taskpaper
+
+Variante 2 - Direkter Import bei Toodledo - 4T
+
+- Command-Line Tool
+- Input-Datei
+- Outputdatei für Taskpaper
+- Direkter Import bei Toodledo via REST mittels Toodledo Developer's API
+
+Variante 3 - Direkter Import und Export bei Toodledo - 5T
+
+Als Grundlage dient Variante 2.
+
+- Direkter Export, bzw. direktes Auslesen der Tasks aus Toodledo und generieren einer Output-Datei für Taskpaper (Rücktransformation)
+
+Hinweis
+Bei allen Varianten wird auf dem System Scala benötigt. Da Scala nach Java Byte Code kompiliert, ist eine Java Installation zwingend.
+
+Alternativ kann das System auch in Ruby implementiert werden. Dann ist der Ruby Interpreter zu installieren.

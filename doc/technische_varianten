@@ -1,0 +1,8 @@
+todoapp Varianten
+
+Scala
+Parser in Scala, Anbindung an Toodledo API mittels vorhandener Java Library.
+
+Ruby
+Parser in Ruby, Anbindung an Toodledo API mittels vorhandenem Ruby Gem
+

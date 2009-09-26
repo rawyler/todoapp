@@ -1,0 +1,88 @@
+Toodledo
+
+Importmöglichkeiten
+
+"Developer's" API
+Java Tooli vorhanden -> Scala
+Ruby gem vorhanden
+Import via RESTful Webservice
+http://www.toodledo.com/info/api_doc.php
+
+
+csv
+
+uncompleted
+"TASK","FOLDER","CONTEXT","GOAL","STARTDATE","STARTTIME","DUEDATE","DUETIME","REPEAT","LENGTH","TIMER","PRIORITY","TAG","STATUS","STAR","NOTE"
+"Add some items to your todo list",,,,,,"2009-08-14",,,"10",,"1",,,,
+"Visit your Account Settings section and configure your account.",,,,,,"2009-08-14",,,"5",,"2",,,,
+
+completed
+"TASK","FOLDER","CONTEXT","GOAL","STARTDATE","STARTTIME","DUEDATE","DUETIME","REPEAT","LENGTH","TIMER","PRIORITY","TAG","STATUS","STAR","NOTE","COMPLETED"
+
+
+xml
+
+<xml>
+<title>Toodledo :: to-do list</title>
+<link>http://www.toodledo.com/</link>
+<toodledoversion>6</toodledoversion>
+<description>Your to-do list</description>
+−
+<item>
+<id>26925150</id>
+<parent>0</parent>
+−
+<title>
+Visit your Account Settings section and configure your account.
+</title>
+<tag/>
+<folder/>
+<context/>
+<goal/>
+<startdate>0000-00-00</startdate>
+<starttime/>
+<duedate>2009-08-14</duedate>
+<duedatemodifier>0</duedatemodifier>
+<duetime/>
+<completed>0000-00-00</completed>
+<repeat>None</repeat>
+<priority>High</priority>
+<length>5 mins</length>
+<timer>0</timer>
+<status>None</status>
+<star>0</star>
+<note/>
+</item>
+−
+<item>
+<id>26925148</id>
+<parent>0</parent>
+<title>Add some items to your todo list</title>
+<tag/>
+<folder/>
+<context/>
+<goal/>
+<startdate>0000-00-00</startdate>
+<starttime/>
+<duedate>2009-08-14</duedate>
+<duedatemodifier>0</duedatemodifier>
+<duetime/>
+<completed>0000-00-00</completed>
+<repeat>None</repeat>
+<priority>Medium</priority>
+<length>10 mins</length>
+<timer>0</timer>
+<status>None</status>
+<star>0</star>
+<note/>
+</item>
+</xml>
+
+
+text
+Toodledo :: Your to-do list
+TASK    FOLDER  DUEDATE PRIORITY    LENGTH  TAG TIMER
+
+Visit your Account Settings section and configure your account.     Aug 14, 2009    High    5 mins      0
+Add some items to your todo list        Aug 14, 2009    Medium  10 mins     0
+
