@@ -1,6 +1,4 @@
-* Tab-support (indent, child of)
-* internal todo representation
-* direct transformation to internal model
+* Tab-support (indent, child of) have to do it in lexer
 * export contents of root to taskpaper file
 * export to xml for toodledo
 
