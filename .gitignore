@@ -5,6 +5,10 @@
 .classpath
 .project
 .manager
+
+# tools
+.pmd
+.checkstyle
  
 # building
 target
