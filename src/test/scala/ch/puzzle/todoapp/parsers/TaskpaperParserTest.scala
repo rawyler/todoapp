@@ -58,15 +58,17 @@ class TaskpaperParserTest extends TestSuite {
                        |the project:
                        |- a task
                        |another project:
-                       |	- another project's task
+                       |- another project's task
                        |}""".stripMargin
+    println(parser.parseAll(parser.root, input))
     assert(parser.parseAll(parser.root, input).successful)
   }
   
   @Test def shouldParseTaskWithChildTask() {
 	val input = """- parent task
-		  |	- child task""".stripMargin
-	// println(parser.parseAll(parser.member, input))
+		           |	- child task
+                   |	- second child""".stripMargin
+	println(parser.parseAll(parser.member, input))
     assert(parser.parseAll(parser.member, input).successful)
   }
   
@@ -86,7 +88,7 @@ class TaskpaperParserTest extends TestSuite {
   
   @Test def shouldParseChild() {
     val input = "	child note"
-    println(parser.parseAll(parser.child, input))
+    // println(parser.parseAll(parser.child, input))
     assert(parser.parseAll(parser.child, input).successful)
   }
   
