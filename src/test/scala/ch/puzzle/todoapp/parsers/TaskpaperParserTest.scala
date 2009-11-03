@@ -53,15 +53,13 @@ class TaskpaperParserTest extends TestSuite {
     assert(parser.parseAll(parser.project, input).successful)
   }
   
-  @Test def shouldParseRootWithTaskAndProject() {
-    val input = """todo {
-                       |the project:
+  @Test def shouldParseTasklistWithTaskAndProject() {
+    val input = """the project:
                        |- a task
                        |another project:
-                       |- another project's task
-                       |}""".stripMargin
+                       |- another project's task""".stripMargin
     // println(parser.parseAll(parser.root, input))
-    assert(parser.parseAll(parser.root, input).successful)
+    assert(parser.parseAll(parser.tasklist, input).successful)
   }
   
   @Test def shouldParseProjectWithChildTask() {
@@ -73,42 +71,85 @@ class TaskpaperParserTest extends TestSuite {
   }
   
   @Test def shouldParseProjectChildren() {
-    val input = """todo{
-		  |- parent task
+    val input = """- parent task
 		  |	- first child
 		  |	a child note
           | - second child
           |project:
           |	- task
           |another project:
-          |- task
-		  |}""".stripMargin
+          |- task""".stripMargin
     // println(parser.parseAll(parser.root, input))
-    assert(parser.parseAll(parser.root, input).successful)
-  }
-  
-    @Test def shouldParseRootInText() {
-    val input = """text text text
-    	  |text text text
-    	  |todo{
-		  |- parent task
-		  |	- first child
-		  |	a child note
-          | - second child
-          |project:
-          |	- task
-          |another project:
-          |- task
-		  |}
-    	  |text text text""".stripMargin
-    // println(parser.parseAll(parser.root, input))
-    assert(parser.parseAll(parser.root, input).successful)
+    assert(parser.parseAll(parser.tasklist, input).successful)
   }
   
   @Test def shouldParseChild() {
     val input = "	child note"
     // println(parser.parseAll(parser.child, input))
     assert(parser.parseAll(parser.child, input).successful)
+  }
+  
+   @Test def shouldParseText() {
+    val input = """text
+    	  | text text text
+          |todo {
+    	  |- parent task
+		  |	- first child
+		  |	a child note
+          | - second child
+          |project:
+          |	- task
+          |another project:
+          |- task
+          |}
+    	  | text text text
+    	  | text text text""".stripMargin
+    // println(parser.parseAll(parser.textContainingTodo, input).get)
+    assert(parser.parseAll(parser.textContainingTodo, input).successful)
+  }
+   
+  @Test def shouldParseTextWithMultipleTaskLists() {
+    val input = """text
+    	  | text text text
+          |todo {
+    	  |- parent task
+		  |	- first child
+		  |	a child note
+          | - second child
+          |project:
+          |	- task
+          |another project:
+          |- task
+          |}
+    	  | text text text
+    	  | text text text
+          |todo {
+    	  |- parent task
+		  |	- first child
+		  |	a child note
+          | - second child
+          |project:
+          |	- task
+          |another project:
+          |- task
+          |}
+    	  | text text text
+    	  | text text text
+          |todo {
+    	  |- parent task
+		  |	- first child
+		  |	a child note
+          | - second child
+          |project:
+          |	- task
+          |another project:
+          |- task
+          |}
+    	  | text text text
+    	  | text text text""".stripMargin
+    println(parser.parseAll(parser.textContainingTodo, input))
+    println(parser.parseAll(parser.textContainingTodo, input).get)
+    assert(parser.parseAll(parser.textContainingTodo, input).successful)
   }
 
 }

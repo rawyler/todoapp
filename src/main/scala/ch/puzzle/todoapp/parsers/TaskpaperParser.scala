@@ -7,10 +7,6 @@ class TaskpaperParser extends RegexParsers {
   
   private def space = "[ \\n]+[\t]*".r
   
-  private def beginList = "todo"~opt(" ")~"{"~opt(space)
-  
-  private def endList = opt(space)~"}"
-    
   private def name = """[^:\n\r\@{}]*""".r
   
   private def tagName = """[\w]*""".r
@@ -19,8 +15,20 @@ class TaskpaperParser extends RegexParsers {
     
   private def noteText = """[^\n\r{}]*""".r
   
-  def root : Parser[TaskList] = ( beginList~repsep(member, space)~endList ) ^^
-    { case start~members~end => TaskList(members) }
+  private def beginList = "todo"~opt(" ")~"{"~opt(space)
+  
+  private def endList = opt(space)~"}"
+  
+  private def allowed = not(beginList)~not(endList)~"[^{}]".r
+  
+  def textContainingTodo: Parser[Text] = ( rep(textBlockContainingTodo) ) ^^
+    { case tasklist => Text(tasklist) }
+    
+  def textBlockContainingTodo: Parser[TaskList] = ( rep(allowed)~beginList~tasklist~endList~rep(allowed) ) ^^
+    { case textbefore~begin~tasklist~end~textafter => tasklist }
+  
+  def tasklist : Parser[TaskList] = ( repsep(member, space) ) ^^
+    { case members => TaskList(members) }
   
   def member : Parser[Member] = (project | task | note)
   
@@ -64,3 +72,19 @@ class TaskpaperParser extends RegexParsers {
       { case at~tagName => new Tag(tagName.toString) }
 
 }
+
+abstract trait Member {
+  val name: String
+  val members: List[Member]
+}
+case class Tag(name: String, value: String) { def this(name: String) = this(name, null) }
+
+case class Task(name: String, tags: List[Tag], members: List[Member]) extends Member
+
+case class Note(name: String, members: List[Member]) extends Member
+
+case class Project(name: String, members: List[Member]) extends Member
+
+case class TaskList(members: List[Member])
+
+case class Text(tasklists: List[TaskList])
