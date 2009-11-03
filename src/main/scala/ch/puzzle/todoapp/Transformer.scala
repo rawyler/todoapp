@@ -23,7 +23,11 @@ object Transformer {
   }
   
   def parse(text: String) = {
-    TaskpaperParser.parseAll(TaskpaperParser.textContainingTodo, text).get
+    TaskpaperParser.parseAll(TaskpaperParser.text, text).get
+  }
+  
+  def splitIntoTaskpaperParts(text: String) = {
+    
   }
   
 }

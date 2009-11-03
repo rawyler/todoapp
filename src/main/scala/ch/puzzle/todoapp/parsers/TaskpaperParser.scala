@@ -21,11 +21,11 @@ object TaskpaperParser extends RegexParsers {
   
   private def allowed = not(beginList)~not(endList)~"[^{}]".r
   
-  def textContainingTodo: Parser[Text] = ( rep(textBlockContainingTodo) ) ^^
+  def text: Parser[Text] = ( rep(textBlockContainingTodo) ) ^^
     { case tasklist => Text(tasklist) }
     
-  def textBlockContainingTodo: Parser[TaskList] = ( rep(allowed)~beginList~tasklist~endList~rep(allowed) ) ^^
-    { case textbefore~begin~tasklist~end~textafter => tasklist }
+  def textBlockContainingTodo: Parser[TaskList] = ( rep(allowed)~>beginList~>tasklist<~endList<~rep(allowed) ) ^^
+    { case tasklist => tasklist }
   
   def tasklist : Parser[TaskList] = ( repsep(member, space) ) ^^
     { case members => TaskList(members) }
@@ -47,16 +47,16 @@ object TaskpaperParser extends RegexParsers {
    * or a colon (':\n') followed by a newline.
    */
   def project : Parser[Project] =
-    ( not(task)~name~":"~space~repsep(child, space) ) ^^
-      { case t~name~colon~space~members => Project(name.toString, members) } |
-    ( not(task)~name~":" ) ^^
-      { case t~name~colon => Project(name.toString, Nil) }
+    ( not(task)~>name~>":"~>space~>repsep(child, space) ) ^^
+      { case members => Project(name.toString, members) } |
+    ( not(task)~>name<~":" ) ^^
+      { case name => Project(name.toString, Nil) }
   
   /**
   * A note is any line that doesn't match the task or project rules.
   */
-  def note : Parser[Note] = ( not(task)~not(project)~not(tag)~noteText ) ^^
-      { case task~project~tag~name => Note(name.toString, Nil) }
+  def note : Parser[Note] = ( not(task)~>not(project)~>not(tag)~>noteText ) ^^
+      { case name => Note(name.toString, Nil) }
   
   /**
    * A context tag has the form "@tag", i.e. it starts with an "at" character

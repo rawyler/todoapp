@@ -105,7 +105,7 @@ class TaskpaperParserTest extends TestSuite {
     	  | text text text
     	  | text text text""".stripMargin
     // println(parser.parseAll(parser.textContainingTodo, input).get)
-    assert(parser.parseAll(parser.textContainingTodo, input).successful)
+    assert(parser.parseAll(parser.text, input).successful)
   }
    
   @Test def shouldParseTextWithMultipleTaskLists() {
@@ -147,7 +147,8 @@ class TaskpaperParserTest extends TestSuite {
           |}
     	  | text text text
     	  | text text text""".stripMargin
-    assert(parser.parseAll(parser.textContainingTodo, input).successful)
+    
+    assert(parser.parseAll(parser.text, input).successful)
   }
 
 }
