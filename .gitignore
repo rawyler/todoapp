@@ -1,4 +1,5 @@
-*.class
+# vim
+*.swp
  
 # eclipse conf file
 .settings
@@ -11,6 +12,7 @@
 .checkstyle
  
 # building
+*.class
 target
 build
 dist

@@ -5,26 +5,33 @@ import scala.util.parsing.combinator._
 class TaskpaperParser extends RegexParsers {
   override def skipWhitespace = false
   
-  private def space = "[ \\n]+".r
+  private def space = "[ \\n]+[\t]*".r
   
-  private def indent = "\t".r
+  private def beginList = "todo"~opt(" ")~"{"~opt(space)
   
-  def root : Parser[TaskList] = ( "todo {"~space~repsep(member, space)~"}" ) ^^
-    { case start~space~members~end => TaskList(members) }
+  private def endList = opt(space)~"}"
+    
+  private def name = """[^:\n\r\@{}]*""".r
+  
+  private def tagName = """[\w]*""".r
+  
+  private def tagIdentifier = "@".r
+    
+  private def noteText = """[^\n\r{}]*""".r
+  
+  def root : Parser[TaskList] = ( beginList~repsep(member, space)~endList ) ^^
+    { case start~members~end => TaskList(members) }
   
   def member : Parser[Member] = (project | task | note)
   
-  def child : Parser[Member] = indent~member ^^ { case indent~member => member }
+  def child : Parser[Member] = (task | note)
   
   /**
    * A task is a line that begins with a hyphen followed by a space ('- ')
    * which can optionally be prefixed (i.e indented) with tabs or spaces.
    * A task can have zero or more context tags.
    */
-  def task : Parser[Task] =
-    ( "- "~name~repsep(tag, " ")~space~rep(child) ) ^^
-      { case "- "~name~tags~space~members => Task(name.toString, tags, members) } |
-    ( "- "~name~repsep(tag, " ") ) ^^
+  def task : Parser[Task] = ( "- "~name~repsep(tag, " ") ) ^^
       { case "- "~name~tags => Task(name.toString, tags, Nil) }
 
   /**
@@ -32,7 +39,7 @@ class TaskpaperParser extends RegexParsers {
    * or a colon (':\n') followed by a newline.
    */
   def project : Parser[Project] =
-    ( not(task)~name~":"~space~rep(child) ) ^^
+    ( not(task)~name~":"~space~repsep(child, space) ) ^^
       { case t~name~colon~space~members => Project(name.toString, members) } |
     ( not(task)~name~":" ) ^^
       { case t~name~colon => Project(name.toString, Nil) }
@@ -40,10 +47,7 @@ class TaskpaperParser extends RegexParsers {
   /**
   * A note is any line that doesn't match the task or project rules.
   */
-  def note : Parser[Note] =
-    ( not(task)~not(project)~not(tag)~noteText~space~rep(child) ) ^^
-      { case task~project~tag~name~space~members => Note(name.toString, members) } |
-    ( not(task)~not(project)~not(tag)~noteText ) ^^
+  def note : Parser[Note] = ( not(task)~not(project)~not(tag)~noteText ) ^^
       { case task~project~tag~name => Note(name.toString, Nil) }
   
   /**
@@ -58,22 +62,5 @@ class TaskpaperParser extends RegexParsers {
       { case at~tagName~o~value~c => Tag(tagName.toString, value.toString) } |
     ( tagIdentifier~tagName ) ^^
       { case at~tagName => new Tag(tagName.toString) }
-  
-  private def name = """[^:\n\r\@]*""".r
-  
-  private def tagName = """[\w]*""".r
-  
-  private def tagIdentifier = "@".r
-    
-  private def noteText = """[^\n\r]*""".r
-}
 
-abstract trait Member {
-  val name: String
-  val members: List[Member]
 }
-case class Tag(name: String, value: String) { def this(name: String) = this(name, null) }
-case class Task(name: String, tags: List[Tag], members: List[Member]) extends Member
-case class Note(name: String, members: List[Member]) extends Member
-case class Project(name: String, members: List[Member]) extends Member
-case class TaskList(members: List[Member])

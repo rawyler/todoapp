@@ -60,28 +60,47 @@ class TaskpaperParserTest extends TestSuite {
                        |another project:
                        |- another project's task
                        |}""".stripMargin
-    println(parser.parseAll(parser.root, input))
+    // println(parser.parseAll(parser.root, input))
     assert(parser.parseAll(parser.root, input).successful)
   }
   
-  @Test def shouldParseTaskWithChildTask() {
-	val input = """- parent task
+  @Test def shouldParseProjectWithChildTask() {
+	val input = """project:
 		           |	- child task
-                   |	- second child""".stripMargin
-	println(parser.parseAll(parser.member, input))
+                   |- second child""".stripMargin
+	// println(parser.parseAll(parser.member, input))
     assert(parser.parseAll(parser.member, input).successful)
   }
   
-  @Test def shouldParseChildren() {
+  @Test def shouldParseProjectChildren() {
     val input = """todo{
 		  |- parent task
 		  |	- first child
 		  |	a child note
           | - second child
-          | 	- child of second
           |project:
           |	- task
+          |another project:
+          |- task
 		  |}""".stripMargin
+    // println(parser.parseAll(parser.root, input))
+    assert(parser.parseAll(parser.root, input).successful)
+  }
+  
+    @Test def shouldParseRootInText() {
+    val input = """text text text
+    	  |text text text
+    	  |todo{
+		  |- parent task
+		  |	- first child
+		  |	a child note
+          | - second child
+          |project:
+          |	- task
+          |another project:
+          |- task
+		  |}
+    	  |text text text""".stripMargin
     // println(parser.parseAll(parser.root, input))
     assert(parser.parseAll(parser.root, input).successful)
   }
@@ -91,10 +110,5 @@ class TaskpaperParserTest extends TestSuite {
     // println(parser.parseAll(parser.child, input))
     assert(parser.parseAll(parser.child, input).successful)
   }
-  
-  @Test def shouldNotParseFalseChild() {
-    val input = "not a child note"
-    assert(!parser.parseAll(parser.child, input).successful)
-  }
-  
+
 }
