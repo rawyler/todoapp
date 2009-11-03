@@ -8,7 +8,7 @@ import org.junit._
 import Assert._
 
 class TaskpaperParserTest extends TestSuite {
-  private val parser = new TaskpaperParser
+  private val parser = TaskpaperParser
   
   @Test def shouldParseSimpleTask() {
     val input = "- this is a task without tags."
@@ -147,8 +147,6 @@ class TaskpaperParserTest extends TestSuite {
           |}
     	  | text text text
     	  | text text text""".stripMargin
-    println(parser.parseAll(parser.textContainingTodo, input))
-    println(parser.parseAll(parser.textContainingTodo, input).get)
     assert(parser.parseAll(parser.textContainingTodo, input).successful)
   }
 

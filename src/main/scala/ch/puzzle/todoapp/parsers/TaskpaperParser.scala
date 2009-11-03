@@ -2,7 +2,7 @@ package ch.puzzle.todoapp.parsers
 
 import scala.util.parsing.combinator._
 
-class TaskpaperParser extends RegexParsers {
+object TaskpaperParser extends RegexParsers {
   override def skipWhitespace = false
   
   private def space = "[ \\n]+[\t]*".r
