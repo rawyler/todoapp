@@ -13,7 +13,7 @@ class FileParserTest extends TestSuite {
     val text = """text
     	  | text text text
           |todo {
-    	  |- parent task
+    	  |- parent task group one
 		  |	- first child
 		  |	a child note
           | - second child
@@ -25,9 +25,7 @@ class FileParserTest extends TestSuite {
     	  | text text text
     	  | text text text
           |todo {
-    	  |- parent task
-		  |	- first child
-		  |	a child note
+    	  |- task group two
           | - second child
           |project:
           |	- task
@@ -36,8 +34,8 @@ class FileParserTest extends TestSuite {
           |}
     	  | text text text
     	  | text text text
-          |todo {
-    	  |- parent task
+          |todo{
+    	  |- parent task group 3
 		  |	- first child
 		  |	a child note
           | - second child
@@ -49,22 +47,9 @@ class FileParserTest extends TestSuite {
     	  | text text text
     	  | text text text""".stripMargin
     
-    //println(parser.parseAll(parser.text, text).get)
+    val resultList = FileParser.extractBlocks(text)
     
-    
-    println(text)
-    println(m(text))
-    
-    assert(true)
-  }
-  
-  def m(someString: String) = {
-    val RE = """([a-z]+)\s*""".r
-    
-    someString match {
-      case RE(block) => block
-      case _ => "no match"
-    }
+    assertEquals(3, resultList.size)
   }
 
 }

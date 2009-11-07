@@ -1,4 +1,3 @@
 * Tab-support (indent, child of) have to do it in lexer
-* export contents of root to taskpaper file
-* export to xml for toodledo
+* export to xml or text for toodledo
 

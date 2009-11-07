@@ -12,21 +12,25 @@ class TaskpaperParserTest extends TestSuite {
   
   @Test def shouldParseSimpleTask() {
     val input = "- this is a task without tags."
+    
     assert(parser.parseAll(parser.task, input).successful)
   }
   
   @Test def shouldParseTaskWithTags() {
     val input = "- task @tag1 @tag2 @tag3(this should work as well) @tag4"
+    
     assert(parser.parseAll(parser.task, input).successful)
   }
   
   @Test def shouldParseWrongTask() {
     val input = "this is not a task."
+    
     assert(!parser.parseAll(parser.task, input).successful)
   }
   
   @Test def shouldParseSimpleTag() {
     val input = "@nameOfTheTag"
+    
     assert(parser.parseAll(parser.tag, input).successful)
     assertEquals(Tag("nameOfTheTag", null), parser.parseAll(parser.tag, input).get)
   }
@@ -50,6 +54,7 @@ class TaskpaperParserTest extends TestSuite {
   
   @Test def shouldParseProject() {
     val input = "this is a project:"
+    
     assert(parser.parseAll(parser.project, input).successful)
   }
   
@@ -58,7 +63,7 @@ class TaskpaperParserTest extends TestSuite {
                        |- a task
                        |another project:
                        |- another project's task""".stripMargin
-    // println(parser.parseAll(parser.root, input))
+
     assert(parser.parseAll(parser.tasklist, input).successful)
   }
   
@@ -66,7 +71,7 @@ class TaskpaperParserTest extends TestSuite {
 	val input = """project:
 		           |	- child task
                    |- second child""".stripMargin
-	// println(parser.parseAll(parser.member, input))
+
     assert(parser.parseAll(parser.member, input).successful)
   }
   
@@ -79,17 +84,25 @@ class TaskpaperParserTest extends TestSuite {
           |	- task
           |another project:
           |- task""".stripMargin
-    // println(parser.parseAll(parser.root, input))
+    
     assert(parser.parseAll(parser.tasklist, input).successful)
   }
   
   @Test def shouldParseChild() {
     val input = "	child note"
-    // println(parser.parseAll(parser.child, input))
+    
     assert(parser.parseAll(parser.child, input).successful)
   }
   
-   @Test def shouldParseText() {
+  @Test def shouldParseSimpleBlock() {
+    val input = """- task
+                  |note
+                  |project:""".stripMargin
+    
+    assert(parser.parseAll(parser.tasklist, input).successful)
+  }
+  
+  @Test def shouldParseText() {
     val input = """text
     	  | text text text
           |todo {
@@ -104,7 +117,7 @@ class TaskpaperParserTest extends TestSuite {
           |}
     	  | text text text
     	  | text text text""".stripMargin
-    // println(parser.parseAll(parser.textContainingTodo, input).get)
+
     assert(parser.parseAll(parser.text, input).successful)
   }
    

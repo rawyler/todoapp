@@ -21,10 +21,10 @@ object TaskpaperParser extends RegexParsers {
   
   private def allowed = not(beginList)~not(endList)~"[^{}]".r
   
-  def text: Parser[Text] = ( rep(textBlockContainingTodo) ) ^^
+  def text: Parser[Text] = ( rep(todoBlock) ) ^^
     { case tasklist => Text(tasklist) }
     
-  def textBlockContainingTodo: Parser[TaskList] = ( rep(allowed)~>beginList~>tasklist<~endList<~rep(allowed) ) ^^
+  def todoBlock: Parser[TaskList] = ( rep(allowed)~>beginList~>tasklist<~endList<~rep(allowed) ) ^^
     { case tasklist => tasklist }
   
   def tasklist : Parser[TaskList] = ( repsep(member, space) ) ^^
