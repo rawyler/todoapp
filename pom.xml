@@ -2,8 +2,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.puzzle.todoapp</groupId>
   <artifactId>todoapp</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <inceptionYear>2008</inceptionYear>
+  <name>Todoapp</name>
+  <version>1.0-BETA</version>
+  <description>This small program transforms task blocks of any text file of the form: todo { simplified Taskpaper syntax } into a .taskpaper file.</description>
+  <inceptionYear>2009</inceptionYear>
   <properties>
     <scala.version>2.7.7</scala.version>
   </properties>
@@ -50,6 +52,19 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <developers>
+  	<developer>
+  		<id>rawyler</id>
+  		<name>Thomas Rawyler</name>
+  		<email>rawyler@puzzle.ch</email>
+  		<organization>Puzzle ITC GmbH</organization>
+  		<organizationUrl>http://puzzle.ch</organizationUrl>
+  	</developer>
+  </developers>
+  <organization>
+  	<name>Puzzle ITC GmbH</name>
+  	<url>http://puzzle.ch</url>
+  </organization>
 
   <build>
     <sourceDirectory>src/main/scala</sourceDirectory>
